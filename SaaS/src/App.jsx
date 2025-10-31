@@ -3,17 +3,25 @@ import "./App.css";
 import "./header.css";
 import "./banner.css";
 import "./productCard.css";
+import "./category.css"; // Make sure this is imported
 
 import Header from "./components/Header";
 import Banner from "./components/Banner";
 import Footer from "./components/Footer";
 import ProductCard from "./components/ProductCard";
+import Category from "./components/Category";
 
-// Import a product image (use one of your existing images for now)
+// Import product image
 import productImage from "./assets/bnr1.JPG";
 
+// Import category images
+import shoesImg from "./assets/Categories/shoes.png";
+import bagImg from "./assets/Categories/bag.png";
+import watchesImg from "./assets/Categories/watches.png";
+import accessoriesImg from "./assets/Categories/accessories.png";
+import perfumeImg from "./assets/Categories/perfume.png";
+
 const App = () => {
-  // Sample products array - replace with your actual products
   const allProducts = [
     { id: 1, name: "Product 1", price: "99.99", originalPrice: "149.99", discount: "30" },
     { id: 2, name: "Product 2", price: "49.99" },
@@ -33,14 +41,22 @@ const App = () => {
     { id: 16, name: "Product 16", price: "29.99" },
   ];
 
-  const itemsPerRow = 4; // 4 items per row on desktop
-  const rowsToShow = 2; // Show 2 rows initially
-  const itemsPerLoad = itemsPerRow * rowsToShow; // 8 items initially
+  const categories = [
+    { name: "Shoes", image: shoesImg },
+    { name: "Bags", image: bagImg },
+    { name: "Watches", image: watchesImg },
+    { name: "Accessories", image: accessoriesImg },
+    { name: "Perfumes", image: perfumeImg },
+  ];
+
+  const itemsPerRow = 4;
+  const rowsToShow = 2;
+  const itemsPerLoad = itemsPerRow * rowsToShow;
 
   const [visibleCount, setVisibleCount] = useState(itemsPerLoad);
 
   const loadMore = () => {
-    setVisibleCount(prev => prev + itemsPerRow); // Load 1 more row (4 items)
+    setVisibleCount(prev => prev + itemsPerRow);
   };
 
   const visibleProducts = allProducts.slice(0, visibleCount);
@@ -52,6 +68,14 @@ const App = () => {
 
       <main>
         <Banner />
+
+        <section className="categories-section">
+          <div className="Category-container">
+            {categories.map((cat, index) => (
+              <Category key={index} name={cat.name} image={cat.image} />
+            ))}
+          </div>
+        </section>
 
         <div className="products-container">
           {visibleProducts.map((product) => (
