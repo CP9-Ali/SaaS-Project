@@ -1,0 +1,31 @@
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    h1 {
+      color:#D4AF37;
+    }
+    p{
+      color:#A0A0A0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #0C0C0C;
+    }
+
+    /* ======== Page Content ======== */
+    main {
+      padding: 0.1rem;
+      background-color:#0C0C0C;
+    }
+
+    footer {
+      padding: 20px;
+      background-color: #1A1A1A;
+      text-align: center;
+      border-top: 1px solid #2A2A2A;
+    }
+ 
