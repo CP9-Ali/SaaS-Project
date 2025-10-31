@@ -2,19 +2,15 @@
 .category-container,
 .Category-container {
   display: flex;
+  flex-wrap: wrap; /* ✅ allow wrapping instead of scrolling */
   gap: 30px;
-  justify-content: space-between;
+  justify-content: space-between; /* ✅ center them nicely */
   align-items: center;
-  flex-wrap: nowrap;
   padding: 40px 0;
   margin: 0 auto;
-  overflow-x: auto;
-  overflow-y: hidden;
   width: 100%;
   max-width: 100%;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-  scrollbar-color: #2A2A2A transparent;
+  overflow: visible; /* ✅ remove horizontal scroll */
 }
 
 /* Add padding through pseudo-element to avoid overflow issues */
@@ -90,9 +86,9 @@
 }
 
 .category-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 80%; /* smaller image inside the circle */
+  height: 80%;
+  object-fit: contain; /* ✅ show the whole image */
   transition: transform 0.3s ease;
   display: block;
 }

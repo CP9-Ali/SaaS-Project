@@ -20,6 +20,7 @@ import bagImg from "./assets/Categories/bag.png";
 import watchesImg from "./assets/Categories/watches.png";
 import accessoriesImg from "./assets/Categories/accessories.png";
 import perfumeImg from "./assets/Categories/perfume.png";
+import clothesImg from "./assets/Categories/clothes.png"
 
 const App = () => {
   const allProducts = [
@@ -47,6 +48,7 @@ const App = () => {
     { name: "Watches", image: watchesImg },
     { name: "Accessories", image: accessoriesImg },
     { name: "Perfumes", image: perfumeImg },
+    { name: "Clothes", image: clothesImg},
   ];
 
   const itemsPerRow = 4;
