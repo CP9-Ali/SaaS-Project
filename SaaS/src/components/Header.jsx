@@ -37,8 +37,8 @@ const Header = () => {
       <header>
         {/* Logo */}
         <div className="logo">
-          <img src={storeIcon} alt="Logo" />
-          <h1>محلي</h1>
+          <a href="App.jsx"><img src={storeIcon} alt="Logo" /></a>
+          <a href="App.jsx">محلي</a>
         </div>
 
         {/* Desktop search bar */}

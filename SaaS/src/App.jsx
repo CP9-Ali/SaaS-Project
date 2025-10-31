@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import "./header.css";
 import "./banner.css";
@@ -13,6 +13,39 @@ import ProductCard from "./components/ProductCard";
 import productImage from "./assets/bnr1.JPG";
 
 const App = () => {
+  // Sample products array - replace with your actual products
+  const allProducts = [
+    { id: 1, name: "Product 1", price: "99.99", originalPrice: "149.99", discount: "30" },
+    { id: 2, name: "Product 2", price: "49.99" },
+    { id: 3, name: "Product 3", price: "79.99", originalPrice: "99.99", discount: "20" },
+    { id: 4, name: "Product 4", price: "59.99" },
+    { id: 5, name: "Product 5", price: "89.99", originalPrice: "119.99", discount: "25" },
+    { id: 6, name: "Product 6", price: "39.99" },
+    { id: 7, name: "Product 7", price: "69.99" },
+    { id: 8, name: "Product 8", price: "54.99", originalPrice: "74.99", discount: "27" },
+    { id: 9, name: "Product 9", price: "44.99" },
+    { id: 10, name: "Product 10", price: "94.99" },
+    { id: 11, name: "Product 11", price: "64.99", originalPrice: "84.99", discount: "24" },
+    { id: 12, name: "Product 12", price: "74.99" },
+    { id: 13, name: "Product 13", price: "84.99" },
+    { id: 14, name: "Product 14", price: "34.99" },
+    { id: 15, name: "Product 15", price: "104.99", originalPrice: "139.99", discount: "25" },
+    { id: 16, name: "Product 16", price: "29.99" },
+  ];
+
+  const itemsPerRow = 4; // 4 items per row on desktop
+  const rowsToShow = 2; // Show 2 rows initially
+  const itemsPerLoad = itemsPerRow * rowsToShow; // 8 items initially
+
+  const [visibleCount, setVisibleCount] = useState(itemsPerLoad);
+
+  const loadMore = () => {
+    setVisibleCount(prev => prev + itemsPerRow); // Load 1 more row (4 items)
+  };
+
+  const visibleProducts = allProducts.slice(0, visibleCount);
+  const hasMore = visibleCount < allProducts.length;
+
   return (
     <>
       <Header />
@@ -21,28 +54,25 @@ const App = () => {
         <Banner />
 
         <div className="products-container">
-          <ProductCard 
-            image={productImage}
-            name="Product Name Here"
-            price="99.99"
-            originalPrice="149.99"
-            discount="30"
-          />
-          
-          <ProductCard 
-            image={productImage}
-            name="Another Product"
-            price="49.99"
-          />
-          
-          <ProductCard 
-            image={productImage}
-            name="Third Product"
-            price="79.99"
-            originalPrice="99.99"
-            discount="20"
-          />
+          {visibleProducts.map((product) => (
+            <ProductCard
+              key={product.id}
+              image={productImage}
+              name={product.name}
+              price={product.price}
+              originalPrice={product.originalPrice}
+              discount={product.discount}
+            />
+          ))}
         </div>
+
+        {hasMore && (
+          <div className="load-more-container">
+            <button className="load-more-btn" onClick={loadMore}>
+              Load More Products
+            </button>
+          </div>
+        )}
       </main>
 
       <Footer />
