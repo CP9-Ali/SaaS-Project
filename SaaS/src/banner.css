@@ -1,5 +1,6 @@
 /* ======== Banner =============== */
     .banner-container {
+      margin-top: 6rem;
       width: 100%;
       max-width: 1200px;
       max-width: fit-content;

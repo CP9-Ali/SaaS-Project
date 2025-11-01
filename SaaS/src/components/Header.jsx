@@ -8,13 +8,36 @@ import cartIcon from "../assets/shopping-cart.png";
 
 const Header = () => {
   const [mobileSearchActive, setMobileSearchActive] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const overlayRef = useRef(null);
   const iconRef = useRef(null);
 
   const toggleMobileSearch = (e) => {
-    e.stopPropagation(); // prevent closing immediately
+    e.stopPropagation();
     setMobileSearchActive((prev) => !prev);
   };
+
+  // Handle scroll behavior
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY < lastScrollY || currentScrollY < 50) {
+        // Scrolling up or near top
+        setIsVisible(true);
+      } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // Scrolling down and past threshold
+        setIsVisible(false);
+        setMobileSearchActive(false); // Close mobile search when hiding
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
 
   // Close when clicking outside overlay + icon
   useEffect(() => {
@@ -34,7 +57,11 @@ const Header = () => {
 
   return (
     <>
-      <header>
+      <header style={{
+        transform: isVisible ? 'translateY(0)' : 'translateY(-100%)',
+        transition: 'transform 0.3s ease-in-out'
+      }}>
+        
         {/* Logo */}
         <div className="logo">
           <a href="App.jsx"><img src={storeIcon} alt="Logo" /></a>
@@ -60,10 +87,12 @@ const Header = () => {
 
         {/* Navigation icons */}
         <div className="nav-icons">
-          <img src={languageIcon} alt="Language" />
-          <img src={categoriesIcon} alt="Categories" />
-          <img src={cartIcon} alt="Cart" />
+          <img id="Language-icon" src={languageIcon} alt="Language" />
+          <img id="Categories-icon" src={categoriesIcon} alt="Categories" />
+          <img id="Cart-icon" src={cartIcon} alt="Cart" />
         </div>
+
+        
       </header>
 
       {/* Mobile Search Overlay */}

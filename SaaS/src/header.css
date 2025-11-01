@@ -12,7 +12,13 @@
       padding: 10px 30px;
       /*border: 2px solid black; */
       position: relative;
+     position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 999;
     }
+
 
     /* ======== Logo ======== */
     .logo {
@@ -20,7 +26,6 @@
       align-items: center;
       gap: 10px;
       flex-shrink: 0;
-     
     }
 
     .logo img {
@@ -83,14 +88,21 @@
       gap: 20px;
       flex-shrink: 0;
     }
+    
 
     .nav-icons img {
-      height: 25px;
-      width: 25px;
+      height: 30px;
+      width: 30px;
       cursor: pointer;
       background-color: white;
       padding: 3px;
       border-radius: 3px;
+    }
+
+    #Language-icon:hover, #Categories-icon:hover, #Cart-icon:hover{
+      border-color: #D4AF37;
+      box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+     transform: scale(1.1);
     }
 
     /* Mobile search overlay */
@@ -190,3 +202,4 @@
         border-radius: 3px;
       }
     }
+

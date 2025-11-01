@@ -12,7 +12,7 @@ import ProductCard from "./components/ProductCard";
 import Category from "./components/Category";
 
 // Import product image
-import productImage from "./assets/bnr1.JPG";
+import productImage from "./assets/products/car1.JPG";
 
 // Import category images
 import shoesImg from "./assets/Categories/shoes.png";
@@ -63,6 +63,10 @@ const App = () => {
 
   const visibleProducts = allProducts.slice(0, visibleCount);
   const hasMore = visibleCount < allProducts.length;
+
+
+
+
 
   return (
     <>
