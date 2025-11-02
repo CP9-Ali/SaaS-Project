@@ -1,6 +1,17 @@
-html, body {
+html {
+  overflow-x: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
   overflow-x: hidden;
   max-width: 100vw;
+  width: 100%;
+  position: relative;
+  margin: 0;
+  padding: 0;
 }
 
 * {
@@ -8,6 +19,13 @@ html, body {
   padding: 0;
   box-sizing: border-box;
 }
+
+#root {
+  overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
+}
+
 h1 {
   color: #D4AF37;
 }
@@ -16,12 +34,13 @@ p {
   color: #A0A0A0;
 }
 
-
-
 /* ======== Page Content ======== */
 main {
   padding: 0.1rem;
   background-color: #0C0C0C;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 footer {
@@ -29,6 +48,9 @@ footer {
   background-color: #1A1A1A;
   text-align: center;
   border-top: 1px solid #2A2A2A;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 /* ======== Products Grid ======== */
@@ -39,6 +61,8 @@ footer {
   padding: 40px 20px;
   max-width: 1400px;
   margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Tablet - 3 columns */
@@ -63,6 +87,8 @@ footer {
   display: flex;
   justify-content: center;
   padding: 30px 20px;
+  width: 100%;
+  max-width: 100vw;
 }
 
 .load-more-btn {
@@ -88,11 +114,12 @@ footer {
   transform: translateY(0);
 }
 
-
 /* Categories Section Wrapper */
 .categories-section {
   width: 100%;
+  max-width: 100vw;
   overflow: hidden;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }

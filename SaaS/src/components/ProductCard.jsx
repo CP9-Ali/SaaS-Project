@@ -1,17 +1,28 @@
-
 import React from "react";
 import "../productCard.css";
 import cartIcon from "../assets/shopping-cart.png";
 
 const ProductCard = ({ 
+  id,
   image, 
   name, 
   price, 
   originalPrice, 
-  discount 
+  discount,
+  onProductClick
 }) => {
+  
+  const handleCardClick = () => {
+    onProductClick(id);
+  };
+
+  const handleAddToCart = (e) => {
+    e.stopPropagation();
+    alert(`Added ${name} to cart!`);
+  };
+
   return (
-    <div className="product-card">
+    <div className="product-card" onClick={handleCardClick}>
       {/* Discount Badge */}
       {discount && (
         <div className="discount-badge">-{discount}%</div>
@@ -34,7 +45,7 @@ const ProductCard = ({
         </div>
 
         {/* Add to Cart Button */}
-        <button className="add-to-cart-btn">
+        <button className="add-to-cart-btn" onClick={handleAddToCart}>
           <img src={cartIcon} alt="Add to cart" />
           <span>Add to Cart</span>
         </button>

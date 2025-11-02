@@ -3,13 +3,15 @@ import "./App.css";
 import "./header.css";
 import "./banner.css";
 import "./productCard.css";
-import "./category.css"; // Make sure this is imported
+import "./category.css";
+import "./productPage.css";
 
 import Header from "./components/Header";
 import Banner from "./components/Banner";
 import Footer from "./components/Footer";
 import ProductCard from "./components/ProductCard";
 import Category from "./components/Category";
+import ProductPage from "./components/ProductPage";
 
 // Import product image
 import productImage from "./assets/products/car1.JPG";
@@ -20,7 +22,7 @@ import bagImg from "./assets/Categories/bag.png";
 import watchesImg from "./assets/Categories/watches.png";
 import accessoriesImg from "./assets/Categories/accessories.png";
 import perfumeImg from "./assets/Categories/perfume.png";
-import clothesImg from "./assets/Categories/clothes.png"
+import clothesImg from "./assets/Categories/clothes.png";
 
 const App = () => {
   const allProducts = [
@@ -48,7 +50,7 @@ const App = () => {
     { name: "Watches", image: watchesImg },
     { name: "Accessories", image: accessoriesImg },
     { name: "Perfumes", image: perfumeImg },
-    { name: "Clothes", image: clothesImg},
+    { name: "Clothes", image: clothesImg },
   ];
 
   const itemsPerRow = 4;
@@ -56,18 +58,32 @@ const App = () => {
   const itemsPerLoad = itemsPerRow * rowsToShow;
 
   const [visibleCount, setVisibleCount] = useState(itemsPerLoad);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   const loadMore = () => {
     setVisibleCount(prev => prev + itemsPerRow);
   };
 
+  const handleProductClick = (productId) => {
+    const product = allProducts.find(p => p.id === productId);
+    setSelectedProduct(product);
+    window.scrollTo(0, 0);
+  };
+
+  const handleBackToHome = () => {
+    setSelectedProduct(null);
+    window.scrollTo(0, 0);
+  };
+
   const visibleProducts = allProducts.slice(0, visibleCount);
   const hasMore = visibleCount < allProducts.length;
 
+  // If a product is selected, show the product page
+  if (selectedProduct) {
+    return <ProductPage product={selectedProduct} onBack={handleBackToHome} />;
+  }
 
-
-
-
+  // Otherwise show the home page
   return (
     <>
       <Header />
@@ -87,11 +103,13 @@ const App = () => {
           {visibleProducts.map((product) => (
             <ProductCard
               key={product.id}
+              id={product.id}
               image={productImage}
               name={product.name}
               price={product.price}
               originalPrice={product.originalPrice}
               discount={product.discount}
+              onProductClick={handleProductClick}
             />
           ))}
         </div>
