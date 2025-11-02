@@ -6,7 +6,7 @@ import languageIcon from "../assets/language.png";
 import categoriesIcon from "../assets/categories.png";
 import cartIcon from "../assets/shopping-cart.png";
 
-const Header = () => {
+const Header = ({ onCartClick, cartCount = 0 }) => {
   const [mobileSearchActive, setMobileSearchActive] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -18,18 +18,22 @@ const Header = () => {
     setMobileSearchActive((prev) => !prev);
   };
 
+  const handleCartClick = () => {
+    if (onCartClick) {
+      onCartClick();
+    }
+  };
+
   // Handle scroll behavior
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
       if (currentScrollY < lastScrollY || currentScrollY < 50) {
-        // Scrolling up or near top
         setIsVisible(true);
       } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        // Scrolling down and past threshold
         setIsVisible(false);
-        setMobileSearchActive(false); // Close mobile search when hiding
+        setMobileSearchActive(false);
       }
 
       setLastScrollY(currentScrollY);
@@ -62,13 +66,11 @@ const Header = () => {
         transition: 'transform 0.3s ease-in-out'
       }}>
         
-        {/* Logo */}
         <div className="logo">
           <a href="App.jsx"><img src={storeIcon} alt="Logo" /></a>
           <a href="App.jsx">محلي</a>
         </div>
 
-        {/* Desktop search bar */}
         <div className="search-bar">
           <div className="input-wrapper">
             <input type="text" placeholder="Search..." />
@@ -76,7 +78,6 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Mobile search icon */}
         <div
           className="mobile-search-icon"
           onClick={toggleMobileSearch}
@@ -85,17 +86,18 @@ const Header = () => {
           <img src={searchIcon} alt="Search" />
         </div>
 
-        {/* Navigation icons */}
         <div className="nav-icons">
           <img id="Language-icon" src={languageIcon} alt="Language" />
           <img id="Categories-icon" src={categoriesIcon} alt="Categories" />
-          <img id="Cart-icon" src={cartIcon} alt="Cart" />
+          <div className="cart-icon-wrapper" onClick={handleCartClick}>
+            <img id="Cart-icon" src={cartIcon} alt="Cart" />
+            {cartCount > 0 && (
+              <span className="cart-badge">{cartCount}</span>
+            )}
+          </div>
         </div>
-
-        
       </header>
 
-      {/* Mobile Search Overlay */}
       {mobileSearchActive && (
         <div
           className="mobile-search-overlay active"

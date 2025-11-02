@@ -9,7 +9,8 @@ const ProductCard = ({
   price, 
   originalPrice, 
   discount,
-  onProductClick
+  onProductClick,
+  onAddToCart
 }) => {
   
   const handleCardClick = () => {
@@ -18,7 +19,9 @@ const ProductCard = ({
 
   const handleAddToCart = (e) => {
     e.stopPropagation();
-    alert(`Added ${name} to cart!`);
+    const product = { id, name, price, originalPrice, discount };
+    onAddToCart(product);
+    //alert(`Added ${name} to cart!`);
   };
 
   return (

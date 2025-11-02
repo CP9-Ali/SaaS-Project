@@ -5,7 +5,7 @@ import Footer from "./Footer";
 import cartIcon from "../assets/shopping-cart.png";
 import productImage from "../assets/products/car1.JPG";
 
-const ProductPage = ({ product, onBack }) => {
+const ProductPage = ({ product, onBack, onAddToCart }) => {
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
 

@@ -5,6 +5,7 @@ import "./banner.css";
 import "./productCard.css";
 import "./category.css";
 import "./productPage.css";
+import "./cartPage.css";
 
 import Header from "./components/Header";
 import Banner from "./components/Banner";
@@ -12,6 +13,7 @@ import Footer from "./components/Footer";
 import ProductCard from "./components/ProductCard";
 import Category from "./components/Category";
 import ProductPage from "./components/ProductPage";
+import CartPage from "./components/CartPage";
 
 // Import product image
 import productImage from "./assets/products/car1.JPG";
@@ -59,6 +61,8 @@ const App = () => {
 
   const [visibleCount, setVisibleCount] = useState(itemsPerLoad);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [showCart, setShowCart] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
 
   const loadMore = () => {
     setVisibleCount(prev => prev + itemsPerRow);
@@ -67,26 +71,79 @@ const App = () => {
   const handleProductClick = (productId) => {
     const product = allProducts.find(p => p.id === productId);
     setSelectedProduct(product);
+    setShowCart(false);
     window.scrollTo(0, 0);
   };
 
   const handleBackToHome = () => {
     setSelectedProduct(null);
+    setShowCart(false);
     window.scrollTo(0, 0);
+  };
+
+  const handleCartClick = () => {
+    setShowCart(true);
+    setSelectedProduct(null);
+    window.scrollTo(0, 0);
+  };
+
+  const handleAddToCart = (product) => {
+    setCartItems(prevItems => {
+      const existingItem = prevItems.find(item => item.id === product.id);
+      if (existingItem) {
+        return prevItems.map(item =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      }
+      return [...prevItems, { ...product, quantity: 1 }];
+    });
+  };
+
+  const handleUpdateQuantity = (productId, newQuantity) => {
+    if (newQuantity < 1) return;
+    setCartItems(prevItems =>
+      prevItems.map(item =>
+        item.id === productId ? { ...item, quantity: newQuantity } : item
+      )
+    );
+  };
+
+  const handleRemoveItem = (productId) => {
+    setCartItems(prevItems => prevItems.filter(item => item.id !== productId));
   };
 
   const visibleProducts = allProducts.slice(0, visibleCount);
   const hasMore = visibleCount < allProducts.length;
 
-  // If a product is selected, show the product page
-  if (selectedProduct) {
-    return <ProductPage product={selectedProduct} onBack={handleBackToHome} />;
+  // Show Cart Page
+  if (showCart) {
+    return (
+      <CartPage
+        cartItems={cartItems}
+        onBack={handleBackToHome}
+        onUpdateQuantity={handleUpdateQuantity}
+        onRemoveItem={handleRemoveItem}
+      />
+    );
   }
 
-  // Otherwise show the home page
+  // Show Product Page
+  if (selectedProduct) {
+    return (
+      <ProductPage
+        product={selectedProduct}
+        onBack={handleBackToHome}
+        onAddToCart={handleAddToCart}
+      />
+    );
+  }
+
+  // Show Home Page
   return (
     <>
-      <Header />
+      <Header onCartClick={handleCartClick} cartCount={cartItems.length} />
 
       <main>
         <Banner />
@@ -110,6 +167,7 @@ const App = () => {
               originalPrice={product.originalPrice}
               discount={product.discount}
               onProductClick={handleProductClick}
+              onAddToCart={handleAddToCart}
             />
           ))}
         </div>
